@@ -44,3 +44,5 @@ Thumbs.db
 # folders to-ignore
 **/add-to-root-and-ignore/
 
+# backup files 
+*~*
