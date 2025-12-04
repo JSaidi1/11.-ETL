@@ -1,0 +1,11 @@
+ville,temp_actuelle,temp_ressentie,humidity,description
+Lille,7.5,4.4,92,nuageux
+Belfort,5.13,5.13,87,partiellement nuageux
+Strasbourg,5.03,3.34,87,bruine légère
+Toulouse,8.99,5.58,81,nuageux
+Tourcoing,7.35,4.22,92,nuageux
+Roubaix,7.45,4.34,92,nuageux
+Marseille,8.62,7.78,66,couvert
+Mulhouse,5.26,2.42,79,ciel dégagé
+Nancy,6.93,3.48,82,couvert
+Nice,0.19,0.19,91,couvert
