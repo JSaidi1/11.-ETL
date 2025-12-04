@@ -1,90 +1,60 @@
-from collections import Counter
-
+# ================== Exercice 4 - REST Countries ==================
 import requests
 import pandas as pd
 
-# Ex 3:
-#======
-
-#--- 1. Récupérer tous les utilisateurs (/users)
-
-# URL de base de l'API de test JSONPlaceholder.
-BASE_URL = "https://jsonplaceholder.typicode.com"
-
-# Cet endpoint renvoie les utilisateurs
-users_url = f"{BASE_URL}/users"
-
-# Envoi d'une requête GET pour récupérer tous les posts.
-response = requests.get(users_url)
-
-print("users = ", response.json())
-
-#--- 2. Afficher le nom et l'email de chaque utilisateur
-for user in response.json():
-    print(f"user_id: {user.get('id')} => username:{user.get('username')} - email:{user.get('email')}")
-
-#--- 3. Récupérer tous les posts de l'utilisateur avec userId=1
-# Cet endpoint renvoie une liste de posts (articles de blog fictifs).
-posts_url = f"{BASE_URL}/posts"
-response = requests.get(posts_url)
-
-print(response.json())
-
-posts_user_1 = {'user_id': '1'}
-# post = {'title':, 'body:'}
-posts_list = []
-posts = {}
-
-for post in response.json():
-    if post.get('userId') == 1:
-        posts['title'] = post.get('title')
-        posts['body'] = post.get('body')
-        posts_list.append(posts)
-        posts = {}
-
-print("Les posts du userId=1 => ", posts_list)
 
 
-#--- 4. Compter combien de posts chaque utilisateur a créé
-users_id = []
-for post in response.json():
-    for userId in {post.get('userId')}:
-        users_id.append(userId)
+API_BASE_URL = "https://restcountries.com/v3.1"
 
-user_articles = Counter(users_id)
+# 1. Récupérer tous les pays d'Europe
+response = requests.get(API_BASE_URL + "/region/europe")
+response.raise_for_status()
 
-for user_id in user_articles:
-    print(f"userId: {user_id} => {user_articles[user_id]}")
+for pays in response.json():
+    print(f"\npays = {pays}")
 
-#--- 5. Récupérer les commentaires du post id=1:
-comments_url = f"{BASE_URL}/comments"
-response = requests.get(comments_url)
-# print(response.json())
-print(response.json()[0])
+# 2. Créer un DataFrame avec : nom, capitale, capitale, superficie
+names = []
+capitals = []
+populations = []
+areas = []
 
-#--- 6. Créer un DataFrame Pandas avec :
-# Colonnes : post_id, post_title, nombre_commentaires
-# Pour les 10 premiers posts
+for pays in response.json():
+    # print(f"\npays.name = {pays['name']['common']}")
+    names.append(pays['name']['common'])
+    capitals.append(pays['capital'][0])
+    populations.append(pays['population'])
+    areas.append(pays['area'])
 
-
-
-# Exemple de données
-post_ids = list(range(1, 11))
-post_titles = [
-    f"Post numéro {i}" for i in range(1, 11)
-]
-nombre_commentaires = [12, 5, 33, 7, 19, 4, 8, 21, 15, 2]
-
-#dataFrame
 df = pd.DataFrame({
-    "post_id": post_ids,
-    "post_title": post_titles,
-    "nombre_commentaires": nombre_commentaires
+    'name': names,
+    'capital': capitals,
+    'population': populations,
+    'area': areas
 })
 
 print(df)
 
+# 3. Calculer la densité de population (population / superficie)
+print("\nAjout de la colonne 'density': ")
+df['density'] = df['population'] / df['area']
+print(df)
 
+# 4. Identifier les 5 pays les plus peuplés d'Europe
+print("\nTop 5 pays les plus peuplés d'europe: ")
+top_5_country = df.sort_values(by='population', ascending=False).head(5)
+print(top_5_country[['name', 'population']])
 
+# 5. Calculer la population totale de l'Europe
+population_europe = df['population'].sum()
 
+print(f"Population totale de l'Europe : {population_europe:,} habitants")
+
+# 6. Trouver le pays avec la plus grande densité
+print("\nLe pays le plus 'dense' d'europe: ")
+top_1_country = df.sort_values(by='density', ascending=False).head(1)
+print(top_1_country[['name', 'density']]) # Monaco  19021.28712
+
+# 7. Sauvegarder les résultats dans pays_europe.xlsx
+df.to_excel('./ex4/pays_europe.xlsx', index=False)
 
