@@ -41,5 +41,6 @@ Thumbs.db
 !data/processed/.gitkeep
 !data/output/.gitkeep
 
-# folder to-ignore
-**/to-ignore/
+# folders to-ignore
+**/to-ignore-init-files/
+**/to-ignore-others/
