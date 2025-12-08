@@ -1,0 +1,12 @@
+2025-12-08 14:09:34 - Sales_ETL - INFO - toto
+2025-12-08 14:13:54 - Sales_ETL - INFO - toto
+2025-12-08 14:22:59 - Sales_ETL - INFO - 
+==> info-pipeline-ventes.py 
+2025-12-08 14:22:59 - Sales_ETL - ERROR - 
+==> error-pipeline-ventes.py 
+2025-12-08 14:24:02 - Sales_ETL - INFO - 
+==> info-pipeline-ventes.py 
+2025-12-08 14:24:02 - Sales_ETL - ERROR - 
+==> error-pipeline-ventes.py 
+2025-12-08 14:24:02 - Sales_ETL - INFO - 
+==> info-pipeline-ventes.py 
